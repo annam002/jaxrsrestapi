@@ -24,4 +24,9 @@ public final class Player {
 		return games;
 	}
 	
+	@Override
+	public String toString() {
+		return "[" + getClass().getSimpleName() + " " + name + "]";
+	}
+	
 }

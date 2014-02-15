@@ -10,28 +10,27 @@ public class Game {
 	private final Board board = new Board();
 	private final List<Move> moves = new ArrayList<>();
 	
-	private Player currentPlayer;
-	
 	public Game(Player player1, Player player2) {
 		this.player1 = player1;
 		this.player2 = player2;
-		currentPlayer = player1;
 	}
 
-	public boolean addMove(Move move) {
-		if (board.setMove(move, currentPlayer)) {
+	public boolean addMove(Player player, int coordinate) {
+		if (!validPlayer(player)) {
+			return false;
+		}
+		Move move = new Move(coordinate, this, player);
+		if (board.setMove(move, player)) {
 			moves.add(move);
-			if (currentPlayer.equals(player1)) {
-				currentPlayer = player2;
-			}
-			else {
-				currentPlayer = player1;
-			}
 			return true;
 		}
 		return false;
 	}
 	
+	private boolean validPlayer(Player player) {
+		return player.equals(player1) || player.equals(player2);
+	}
+
 	public Player getPlayer1() {
 		return player1;
 	}

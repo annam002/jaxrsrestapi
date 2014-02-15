@@ -36,10 +36,13 @@ public class Board {
 			return;
 		}
 		if (inOneRow(0, 1, 2)
-			&& inOneRow(3, 4, 5)	
-			&& inOneRow(6, 7, 8)	
-			&& inOneRow(1, 4, 8)	
-			&& inOneRow(6, 4, 2)	
+			|| inOneRow(3, 4, 5)	
+			|| inOneRow(6, 7, 8)	
+			|| inOneRow(0, 3, 6)	
+			|| inOneRow(1, 4, 7)	
+			|| inOneRow(2, 5, 8)	
+			|| inOneRow(0, 4, 8)	
+			|| inOneRow(2, 4, 6)	
 			) {
 			state = BoardState.WIN;
 		}
