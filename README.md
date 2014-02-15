@@ -23,17 +23,17 @@ http://admin:adminadmin@192.168.2.24:9990
 
 URL: /player
 
-HTTP METHOD POST: { name: "user name" }
+HTTP METHOD POST: { "name":"user name" }
 
-RESPONSE: { playerid: 123 }
+RESPONSE: { "playerid":123 }
 
 ##get player##
 
-URL: /player/{ playerid: 123 }
+URL: /player/{ "playerid":123 }
 
 HTTP METHOD GET
 
-RESPONSE: { playerid: 123, name: "user name" }
+RESPONSE: { "playerid":123, "name":"user name" }
 
 ##list all players##
 
@@ -41,7 +41,7 @@ URL: /player
 
 HTTP METHOD GET
 
-RESPONSE: { [ playerid: 123, playerid: 456 ] }
+RESPONSE: { [ "playerid":123, "playerid":456 ] }
 
 #Game#
 
