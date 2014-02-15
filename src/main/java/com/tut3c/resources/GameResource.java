@@ -98,7 +98,7 @@ public class GameResource {
     	Game game = games.get(gameId);
     	
     	if (game == null) {
-    		return conflict();
+    		return notFound();
     	}
     	
     	List<Map<String, Object>> result = new ArrayList<>();
@@ -162,7 +162,7 @@ public class GameResource {
     	Game game = games.get(gameId);
     	
     	if (game == null) {
-    		return conflict();
+    		return notFound();
     	}
     	
     	List<Map<String, Object>> result = new ArrayList<>();
@@ -177,7 +177,7 @@ public class GameResource {
     public Response getMove(@PathParam("gameid") Integer gameId, @PathParam("moveid") Integer moveId) {
     	Game game = games.get(gameId);
     	if (game == null || moveId == null) {
-    		return conflict();
+    		return notFound();
     	}
     	
     	List<Map<String, Object>> result = new ArrayList<>();
@@ -193,6 +193,10 @@ public class GameResource {
     	return Response.accepted(result).build();
     }
 
+	private Response notFound() {
+		return Response.status(Status.NOT_FOUND).build();
+	}
+	
 	private Response conflict() {
 		return Response.status(Status.CONFLICT).build();
 	}
