@@ -8,10 +8,6 @@
 	<name>wildfly</name>
 
 	<properties>
-<!-- 		<jboss-as.deploy.hostname>localhost</jboss-as.deploy.hostname>  Where to deploy. -->
-		<!-- <jboss-as.deploy.user>admin</jboss-as.deploy.user> -->
-		<!-- <jboss-as.deploy.pass>${myproject.deploy.pass.prod}</jboss-as.deploy.pass> -->
-		<!-- <plugin.war.warName>${project.build.finalName}</plugin.war.warName> -->
 	</properties>
 
 	<dependencies>
@@ -57,21 +53,23 @@
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>1.0.0.Final</version>
 				<configuration>
-					<!-- <hostname>127.0.0.1</hostname> -->
-					<!-- <port>8080</port> -->
-					<!-- <username>laura</username> -->
-					<!-- <password>***</password> -->
+					<hostname>${wildfly-hostname}</hostname>
+					<port>${wildfly-port}</port>
+					<username>${wildfly-username}</username>
+					<password>${wildfly-password}</password>
 				</configuration>
 				<executions>
 					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
+<!-- 						<phase>package</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>deploy</goal> -->
+<!-- 						</goals> -->
 					</execution>
 				</executions>
 			</plugin>
+		
 		</plugins>
+		
 	</build>
 
 </project>
