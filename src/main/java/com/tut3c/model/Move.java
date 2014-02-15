@@ -1,6 +1,12 @@
 package com.tut3c.model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public final class Move {
+	
+	private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+	
+	private final int id = ID_GENERATOR.incrementAndGet();
 	
 	private final int coordinate;
 	private final Game game;
@@ -10,6 +16,10 @@ public final class Move {
 		this.coordinate = coordinate;
 		this.game = game;
 		this.player = player;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public int getCoordinate() {

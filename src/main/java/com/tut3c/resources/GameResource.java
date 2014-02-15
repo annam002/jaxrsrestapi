@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import com.tut3c.model.Game;
+import com.tut3c.model.Move;
 import com.tut3c.model.Player;
 
 @Path("/game")
@@ -24,8 +24,7 @@ public class GameResource {
 
 	private static final String GAMEID = "gameid";
 	private static final String FIELD = "field";
-
-	private final static AtomicInteger gameId = new AtomicInteger(0);
+	private static final String MOVEID = "moveid";
 
 	public static Map<Integer, Game> games = new HashMap<>();
 	
@@ -41,7 +40,6 @@ public class GameResource {
     	
     	Game game = new Game();
     	game.setPlayer1(player);
-    	game.setId(gameId.incrementAndGet());
     	games.put(game.getId(), game);
     	
     	Map<String, Object> result = new HashMap<>();
@@ -87,6 +85,21 @@ public class GameResource {
 		game.addMove(player, coordinate);
     	
     	return Response.noContent().build();
+    }
+    
+    @GET
+    @Path("/{gameid:.+}/move")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    public List<Map<String, Object>> getMoves(@PathParam("gameid") Integer gameId) {
+    	Game game = games.get(gameId);
+    	List<Map<String, Object>> result = new ArrayList<>();
+    	for (Move move : game.getMoves()) {
+    		Map<String, Object> moveMap = new HashMap<>();
+    		moveMap.put(MOVEID, move.getId());
+    		result.add(moveMap);
+    	}
+    	return result;
     }
 
 	private Integer getField(Map<String, Object> parameter) {
