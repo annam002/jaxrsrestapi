@@ -59,7 +59,7 @@ RESPONSE: HTTP 201 CREATED {"gameid":123}
 
 URL: /game
 
-HTTP METHOD POST: {"playerid":123,"first"=false}
+HTTP METHOD POST: {"playerid":123,"first":false}
 
 RESPONSE: HTTP 201 CREATED {"gameid":123}
 
