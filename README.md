@@ -33,7 +33,7 @@ URL: /player/{ "playerid":123 }
 
 HTTP METHOD GET
 
-RESPONSE: { "playerid":123, "name":"user name" }
+RESPONSE: {"playerid":123,"name":"user name"}
 
 ##list all players##
 
@@ -41,7 +41,7 @@ URL: /player
 
 HTTP METHOD GET
 
-RESPONSE: { [ "playerid":123, "playerid":456 ] }
+RESPONSE: [{"playerid":123,"name":"Horst"},{"playerid":456,"name":"Vollhorst"}]
 
 #Game#
 
