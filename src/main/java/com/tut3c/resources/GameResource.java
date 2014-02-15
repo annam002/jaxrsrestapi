@@ -34,6 +34,7 @@ import com.tut3c.model.Player;
 public class GameResource {
 
 	private static final String GAMEID = "gameid";
+	private static final String IS_FIRST = "first";
 	private static final String FIELD = "field";
 	private static final String MOVEID = "moveid";
 	private static final String PLAYERS = "players";
@@ -52,13 +53,19 @@ public class GameResource {
     @Consumes({ "application/json" })
     public Response create(HashMap<String, Object> parameter) {
     	Player player = getPlayer(parameter);
+    	Boolean isFirst = (Boolean) parameter.get(IS_FIRST);
     	
     	if (player == null) {
     		return conflict();
     	}
     	
     	Game game = new Game();
-    	game.setPlayer1(player);
+    	if (isFirst != null && !isFirst) {
+    		game.setPlayer2(player);
+    	}
+    	else {
+    		game.setPlayer1(player);
+    	}
     	games.put(game.getId(), game);
     	
         return Response.accepted(buildMap(GAMEID, game.getId())).build();
@@ -83,11 +90,16 @@ public class GameResource {
     	Game game = games.get(gameId);
     	Player player = getPlayer(parameter);
     	
-    	if (game == null || player == null || game.getPlayer2() != null) {
+    	if (game == null || player == null) {
     		return conflict();
     	}
     	
-    	game.setPlayer2(player);
+    	if (game.getPlayer2() == null) {
+    		game.setPlayer2(player);
+    	}
+    	else {
+    		game.setPlayer1(player);
+    	}
     	
         return Response.noContent().build();
     }
@@ -180,17 +192,15 @@ public class GameResource {
     		return notFound();
     	}
     	
-    	List<Map<String, Object>> result = new ArrayList<>();
     	for (Move move : game.getMoves()) {
     		if (move.getId() == moveId) {
     			Map<String, Object> moveMap = new HashMap<>();
     			moveMap.put(PlayerResource.PLAYERID, move.getPlayer().getId());
     			moveMap.put(FIELD, getCoordinate(move.getField()));
-    			result.add(moveMap);
-    			break;
+    			return Response.accepted(moveMap).build();
     		}
     	}
-    	return Response.accepted(result).build();
+    	return notFound();
     }
 
 	private Response notFound() {
