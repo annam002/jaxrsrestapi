@@ -31,7 +31,7 @@ URL: /game
 
 HTTP METHOD GET
 
-RESPONSE: [ { gameid: 123 }, { gameid: 456 } ]
+RESPONSE: [ { games: { gameid: 123 }, { gameid: 456 } } ]
 
 ##join a game##
 
@@ -55,7 +55,7 @@ URL: /game/{ gameid: 123 }/move
 
 HTTP METHOD GET
 
-RESPONSE: [ moves: { { field: A1, playerid: 123 }, { field: B2, playerid: 456 } } ]
+RESPONSE: [ { moves: { moveid: 123 }, { moveid: 456 } } ]
 
 ##show game state##
 
