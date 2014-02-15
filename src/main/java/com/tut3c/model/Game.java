@@ -2,10 +2,13 @@ package com.tut3c.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game {
 	
-	private int id;
+	private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+	
+	private final int id = ID_GENERATOR.incrementAndGet();
 	
 	private final Board board = new Board();
 	private final List<Move> moves = new ArrayList<>();
@@ -17,10 +20,6 @@ public class Game {
 		return id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	public void setPlayer1(Player player1) {
 		this.player1 = player1;
 	}
@@ -29,11 +28,11 @@ public class Game {
 		this.player2 = player2;
 	}
 
-	public boolean addMove(Player player, int coordinate) {
+	public boolean addMove(Player player, int field) {
 		if (!validPlayer(player)) {
 			return false;
 		}
-		Move move = new Move(coordinate, this, player);
+		Move move = new Move(field, this, player);
 		if (board.setMove(move, player)) {
 			moves.add(move);
 			return true;
