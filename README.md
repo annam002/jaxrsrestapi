@@ -31,7 +31,7 @@ URL: /game
 
 HTTP METHOD GET
 
-RESPONSE: [ { gameid: 123 }, { gameid: 456 } ]
+RESPONSE: [ { games: { gameid: 123 }, { gameid: 456 } } ]
 
 ##join a game##
 
@@ -45,7 +45,7 @@ RESPONSE: HTTP 204 NO CONTENT
 
 URL: /game/{ gameid: 123 }/move
 
-HTTP METHOD POST: [ { playerid: 123 }, { field: B1 } ]
+HTTP METHOD POST: [ { playerid: 123 }, { field: "B1" } ]
 
 RESPONSE: HTTP 204 NO CONTENT
 
@@ -55,7 +55,16 @@ URL: /game/{ gameid: 123 }/move
 
 HTTP METHOD GET
 
-RESPONSE: [ moves: { { field: A1, playerid: 123 }, { field: B2, playerid: 456 } } ]
+RESPONSE: [ { moves: { moveid: 123 }, { moveid: 456 } } ]
+
+##get move##
+
+URL: /game/{ gameid: 123 }/move/{ moveid: 123 } }
+
+HTTP METHOD GET
+
+RESPONSE: [ { playerid: 123 }, { field: "B1" } } ]
+
 
 ##show game state##
 
@@ -63,4 +72,4 @@ URL: /game/{ gameid: 123 }
 
 HTTP METHOD GET
 
-RESPONSE: [ { players: { player: { playerid: 789 }, player: { playerid: 012 } }, state: { OPEN | RUNNING | FINISHED }, next: { playerid: 123 }, winner: { playerid: 123 } ]
+RESPONSE: [ { players: { player: { playerid: 789 }, player: { playerid: 012 } }, state: { "OPEN" | "RUNNING" | "FINISHED" }, next: { playerid: 123 }, winner: { playerid: 123 } ]
