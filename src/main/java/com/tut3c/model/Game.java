@@ -1,4 +1,4 @@
-package com.tut3c.jaxrsrestapi;
+package com.tut3c.model;
 
 import java.util.ArrayList;
 import java.util.List;

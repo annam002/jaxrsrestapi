@@ -4,7 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.tut3c.jaxrsrestapi.Board.BoardState;
+import com.tut3c.model.Board;
+import com.tut3c.model.Game;
+import com.tut3c.model.Player;
+import com.tut3c.model.Board.BoardState;
 
 public class TicTacToeTest {
 
