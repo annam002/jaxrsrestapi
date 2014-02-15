@@ -35,6 +35,8 @@ HTTP METHOD GET
 
 RESPONSE: {"playerid":123,"name":"user name"}
 
+ERROR RESPONSE: HTTP 404 NOT FOUND
+
 ##list all players##
 
 URL: /player
@@ -68,6 +70,8 @@ URL: /game/{gameid:123}
 HTTP METHOD GET
 
 RESPONSE: {players:[{playerid:789},{playerid:012}],state:{"OPEN"|"RUNNING"|"FINISHED"},next:{playerid:123},winner:{ playerid:123}}
+
+ERROR RESPONSE: HTTP 404 NOT FOUND
 
 ##list all games##
 
@@ -106,6 +110,8 @@ URL: /game/{gameid:123}/move/{moveid:123}
 HTTP METHOD GET
 
 RESPONSE: {playerid:123,field:"B1"}
+
+ERROR RESPONSE: HTTP 404 NOT FOUND
 
 ##list all moves##
 
