@@ -58,7 +58,7 @@ public class Game {
 	}
 
 	private boolean validPlayer(Player player) {
-		return player.equals(player1) || player.equals(player2);
+		return player != null && player.equals(currentPlayer);
 	}
 
 	public Player getPlayer1() {

@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.tut3c.model.Board;
 import com.tut3c.model.Game;
@@ -47,18 +48,20 @@ public class GameResource {
 	
 	private static Map<String, Integer> coordinateMap = createCoordinateMap();
 
-//	private static Logger LOG = Logger.getLogger(GameResource.class);
-
     @POST
     @Consumes({ "application/json" })
-    public Map<String, Object> create(HashMap<String, Object> parameter) {
+    public Response create(HashMap<String, Object> parameter) {
     	Player player = getPlayer(parameter);
+    	
+    	if (player == null) {
+    		return conflict();
+    	}
     	
     	Game game = new Game();
     	game.setPlayer1(player);
     	games.put(game.getId(), game);
     	
-        return buildMap(GAMEID, game.getId());
+        return Response.accepted(buildMap(GAMEID, game.getId())).build();
     }
     
     @GET
@@ -79,25 +82,32 @@ public class GameResource {
     public Response joinGame(@PathParam("gameid") Integer gameId, HashMap<String, Object> parameter) {
     	Game game = games.get(gameId);
     	Player player = getPlayer(parameter);
+    	
+    	if (game == null || player == null || game.getPlayer2() != null) {
+    		return conflict();
+    	}
+    	
     	game.setPlayer2(player);
     	
         return Response.noContent().build();
     }
     
-    //players: { { playerid: 789 }, { playerid: 012 } }, 
-    //state: { "OPEN" | "RUNNING" | "FINISHED" }, 
-    //next: { playerid: 123 }, 
-    //winner: { playerid: 123 }
     @GET
     @Path("/{gameid:.+}")
-    public List<Map<String, Object>> getGame(@PathParam("gameid") Integer gameId) {
+    public Response getGame(@PathParam("gameid") Integer gameId) {
     	Game game = games.get(gameId);
+    	
+    	if (game == null) {
+    		return conflict();
+    	}
+    	
     	List<Map<String, Object>> result = new ArrayList<>();
     	result.add(buildMap(PLAYERS, getGamePlayers(game)));
     	result.add(buildMap(STATE, getGameState(game)));
     	result.add(buildMap(NEXT, getNextPlayer(game)));
     	result.add(buildMap(WINNER, getWinner(game)));
-        return result;
+    	
+        return Response.accepted(result).build();
     }
 
 	private List<Map<String, Object>> getGamePlayers(Game game) {
@@ -133,29 +143,43 @@ public class GameResource {
     @Path("/{gameid:.+}/move")
     @Consumes({ "application/json" })
     public Response move(@PathParam("gameid") Integer gameId, HashMap<String, Object> parameter) {
+		Game game = games.get(gameId);
     	Player player = getPlayer(parameter);
-    	Game game = games.get(gameId);
     	Integer coordinate = getField(parameter);
-		game.addMove(player, coordinate);
     	
-    	return Response.noContent().build();
+    	if (game == null || player == null || coordinate == null) {
+    		return conflict();
+    	}
+    	
+		boolean moveSuccessful = game.addMove(player, coordinate);
+    	
+    	return moveSuccessful ?  Response.noContent().build() : conflict();
     }
     
     @GET
     @Path("/{gameid:.+}/move")
-    public List<Map<String, Object>> getMoves(@PathParam("gameid") Integer gameId) {
+    public Response getMoves(@PathParam("gameid") Integer gameId) {
     	Game game = games.get(gameId);
+    	
+    	if (game == null) {
+    		return conflict();
+    	}
+    	
     	List<Map<String, Object>> result = new ArrayList<>();
     	for (Move move : game.getMoves()) {
     		result.add(buildMap(MOVEID, move.getId()));
     	}
-    	return result;
+    	return Response.accepted(result).build();
     }
     
     @GET
     @Path("/{gameid:.+}/move/{moveid:.+}")
-    public List<Map<String, Object>> getMove(@PathParam("gameid") Integer gameId, @PathParam("moveid") Integer moveId) {
+    public Response getMove(@PathParam("gameid") Integer gameId, @PathParam("moveid") Integer moveId) {
     	Game game = games.get(gameId);
+    	if (game == null || moveId == null) {
+    		return conflict();
+    	}
+    	
     	List<Map<String, Object>> result = new ArrayList<>();
     	for (Move move : game.getMoves()) {
     		if (move.getId() == moveId) {
@@ -166,9 +190,13 @@ public class GameResource {
     			break;
     		}
     	}
-    	return result;
+    	return Response.accepted(result).build();
     }
 
+	private Response conflict() {
+		return Response.status(Status.CONFLICT).build();
+	}
+    
     private Map<String, Object> buildMap(String fieldName, Object value) {
     	Map<String, Object> result = new HashMap<>();
     	result.put(fieldName, value);
