@@ -1,7 +1,7 @@
 package com.tut3c.resources;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,9 +24,9 @@ import com.tut3c.model.Player;
 @Path("/player")
 public class PlayerResource {
 
-	private final static AtomicLong playerId = new AtomicLong(0L);
+	private final static AtomicInteger playerId = new AtomicInteger(0);
 
-	public static HashMap<Long, Player> players = new HashMap<>();
+	public static HashMap<Integer, Player> players = new HashMap<>();
 
 	private static Logger LOG = Logger.getLogger(PlayerResource.class);
 

@@ -5,6 +5,15 @@ A first JAX-RS for Wildfly Implementation
 
 ![Brainstorming](brainstorming.jpg)
 
+#Test-Server#
+
+http://192.168.2.24:8080/TicTacWildfy-0.0.1-SNAPSHOT/
+
+http://192.168.2.24:8080/TicTacWildfy-0.0.1-SNAPSHOT/rest/player
+http://192.168.2.24:8080/TicTacWildfy-0.0.1-SNAPSHOT/rest/game
+
+Management-Konsole: http://admin:adminadmin@192.168.2.24:9990
+
 #Player#
 
 ##create a new player##
@@ -48,6 +57,9 @@ URL: /game/{ gameid: 123 }/move
 HTTP METHOD POST: [ { playerid: 123 }, { field: "B1" } ]
 
 RESPONSE: HTTP 204 NO CONTENT
+
+ERROR RESPONSE: HTTP 409 CONFLICT 
+Move not allowed!
 
 ##get moves##
 

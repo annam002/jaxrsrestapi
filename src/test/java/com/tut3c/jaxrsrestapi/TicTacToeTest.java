@@ -15,7 +15,7 @@ public class TicTacToeTest {
 	public void test1() {
 		Player player1 = new Player("player1");
 		Player player2 = new Player("player2");
-		Game game = new Game(player1, player2);
+		Game game = new Game();
 		
 		game.addMove(player1, 0);
 		game.addMove(player2, 1);
