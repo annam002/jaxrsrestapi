@@ -151,9 +151,9 @@ public class GameResource {
     		return conflict();
     	}
     	
-		boolean moveSuccessful = game.addMove(player, coordinate);
+		Move move = game.addMove(player, coordinate);
     	
-    	return moveSuccessful ?  Response.noContent().build() : conflict();
+    	return move != null ?  Response.accepted(move).build() : conflict();
     }
     
     @GET

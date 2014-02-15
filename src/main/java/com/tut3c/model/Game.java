@@ -34,17 +34,18 @@ public class Game {
 		return currentPlayer;
 	}
 
-	public boolean addMove(Player player, int field) {
+	public Move addMove(Player player, int field) {
 		if (!validPlayer(player)) {
-			return false;
+			return null;
 		}
+		
 		Move move = new Move(field, this, player);
 		if (board.setMove(move, player)) {
 			moves.add(move);
 			updatePlayer(player);
-			return true;
+			return move;
 		}
-		return false;
+		return null;
 	}
 	
 	private void updatePlayer(Player player) {
