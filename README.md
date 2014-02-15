@@ -1,7 +1,9 @@
 jaxrsrestapi
 ============
 
-A first JAX-RS for Wildfly Implementaiton
+A first JAX-RS for Wildfly Implementation
+
+![Brainstorming](brainstorming.jpg)
 
 #Player#
 
@@ -30,6 +32,3 @@ URL: /game
 HTTP METHOD GET
 
 RESPONSE: [ { gameid: 123 }, { gameid: 456 } ]
-
-
-
