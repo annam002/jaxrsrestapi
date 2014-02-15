@@ -164,7 +164,7 @@ public class GameResource {
     	}
 
 		Move move = game.addMove(player, coordinate);
-    	return move != null ?  Response.accepted(move).build() : conflict();
+    	return move != null ? Response.accepted(buildMap(MOVEID, move.getId())).build() : conflict();
     }
 
     @GET
