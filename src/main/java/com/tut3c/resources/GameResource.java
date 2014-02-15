@@ -15,6 +15,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import com.tut3c.model.Board;
@@ -61,7 +62,7 @@ public class GameResource {
     }
     
     @GET
-    public List<Map<String, Object>> getGames() {
+    public List<Map<String, Object>> getGames(@QueryParam("state") String state) {
     	List<Map<String, Object>> result = new ArrayList<>();
     	for (Game game : games.values()) {
     		if (game.getPlayer2() == null) {
