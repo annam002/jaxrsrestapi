@@ -7,7 +7,7 @@ public final class Player {
 
 	private String name;
 
-	private long id;
+	private int id;
 
 	private final List<Game> games = new ArrayList<>();
 
@@ -39,11 +39,11 @@ public final class Player {
 		return "[" + getClass().getSimpleName() + " " + name + "]";
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
