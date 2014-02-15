@@ -10,9 +10,12 @@ A first JAX-RS for Wildfly Implementation
 http://192.168.2.24:8080/TicTacWildfy-0.0.1-SNAPSHOT/
 
 http://192.168.2.24:8080/TicTacWildfy-0.0.1-SNAPSHOT/rest/player
+
 http://192.168.2.24:8080/TicTacWildfy-0.0.1-SNAPSHOT/rest/game
 
-Management-Konsole: http://admin:adminadmin@192.168.2.24:9990
+Management-Konsole:
+
+http://admin:adminadmin@192.168.2.24:9990
 
 #Player#
 
