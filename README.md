@@ -25,7 +25,7 @@ URL: /player
 
 HTTP METHOD POST: {"name":"user name"}
 
-RESPONSE: {"playerid":123}
+RESPONSE: HTTP 201 CREATED {"playerid":123}
 
 ##get player##
 
@@ -51,25 +51,25 @@ RESPONSE: [{"playerid":123},{"playerid":456}]
 
 URL: /game
 
-HTTP METHOD POST: {playerid:123}
+HTTP METHOD POST: {"playerid":123}
 
-RESPONSE: {gameid:123}
+RESPONSE: HTTP 201 CREATED {"gameid":123}
 
 ##join a game##
 
-URL: /game/{gameid:123}
+URL: /game/{"gameid":123}
 
-HTTP METHOD PUT: {playerid:789}
+HTTP METHOD PUT: {"playerid":789}
 
 RESPONSE: HTTP 204 NO CONTENT
 
 ##show game state##
 
-URL: /game/{gameid:123}
+URL: /game/{"gameid":123}
 
 HTTP METHOD GET
 
-RESPONSE: {players:[{playerid:789},{playerid:012}],state:{"OPEN"|"RUNNING"|"FINISHED"},next:{playerid:123},winner:{ playerid:123}}
+RESPONSE: {"players":[{"playerid":789},{"playerid":012}],"state":{"OPEN"|"RUNNING"|"FINISHED"},"next":{"playerid":123},"winner":{"playerid":123}}
 
 ERROR RESPONSE: HTTP 404 NOT FOUND
 
@@ -79,7 +79,7 @@ URL: /game
 
 HTTP METHOD GET
 
-RESPONSE: [{gameid:123},{gameid:456}]
+RESPONSE: [{"gameid":123},{"gameid":456}]
 
 ##list all games with one player##
 
@@ -87,17 +87,17 @@ URL: /game?state="OPEN"
 
 HTTP METHOD GET
 
-RESPONSE: [{gameid:123},{gameid:456}]
+RESPONSE: [{"gameid":123},{"gameid":456}]
 
 #Move#
 
 ##create a new move##
 
-URL: /game/{gameid:123}/move
+URL: /game/{"gameid":123}/move
 
-HTTP METHOD POST: {playerid:123,field:"B1"}
+HTTP METHOD POST: {"playerid":123,"field":"B1"}
 
-RESPONSE: HTTP 204 NO CONTENT
+RESPONSE: HTTP 201 CREATED {"moveid":123}
 
 ERROR RESPONSE: HTTP 409 CONFLICT
 
@@ -105,18 +105,18 @@ Move not allowed!
 
 ##get move##
 
-URL: /game/{gameid:123}/move/{moveid:123}
+URL: /game/{"gameid":123}/move/{"moveid":123}
 
 HTTP METHOD GET
 
-RESPONSE: {playerid:123,field:"B1"}
+RESPONSE: {"playerid":123,"field":"B1"}
 
 ERROR RESPONSE: HTTP 404 NOT FOUND
 
 ##list all moves##
 
-URL: /game/{gameid:123}/move
+URL: /game/{"gameid":123}/move
 
 HTTP METHOD GET
 
-RESPONSE: [{moveid:123},{moveid:456}]
+RESPONSE: [{"moveid":123},{"moveid":456}]
