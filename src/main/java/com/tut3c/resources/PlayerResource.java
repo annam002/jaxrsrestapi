@@ -1,5 +1,6 @@
 package com.tut3c.resources;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ import com.tut3c.model.Player;
 
 /**
  * The Ultimate Tic Tac Toe Challenge 2014
- * 
+ *
  * http://jugda.wordpress.com/termine/tic-tac-toe/
  */
 @Path("/player")
@@ -46,8 +47,15 @@ public class PlayerResource {
 	}
 
 	@GET
-	public Collection<Player> get() {
-		return players.values();
+	public Collection<Map<String, Object>> get() {
+
+		Collection<Map<String, Object>> response = new ArrayList<>();
+		for(Player p : players.values()) {
+			Map<String, Object> player = new HashMap<>();
+			player.put("playerid", p.getId());
+			response.add(player);
+		}
+		return response;
 	}
 
 }
