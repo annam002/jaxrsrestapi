@@ -57,9 +57,9 @@ RESPONSE: HTTP 201 CREATED {"gameid":123}
 
 ##create a new game as second player##
 
-URL: /game?first=false
+URL: /game
 
-HTTP METHOD POST: {"playerid":123}
+HTTP METHOD POST: {"playerid":123,"first":false}
 
 RESPONSE: HTTP 201 CREATED {"gameid":123}
 

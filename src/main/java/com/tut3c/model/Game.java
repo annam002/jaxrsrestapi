@@ -33,7 +33,7 @@ public class Game {
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-
+	
 	public Move addMove(Player player, int field) {
 		if (!validPlayer(player)) {
 			return null;
