@@ -2,7 +2,6 @@ package com.tut3c.resources;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -26,7 +25,6 @@ import com.tut3c.model.Player;
 public class PlayerResource {
 
 	private static final String PLAYERID = "playerid";
-	private final static AtomicInteger playerId = new AtomicInteger(0);
 
 	public static HashMap<Integer, Player> players = new HashMap<>();
 
@@ -40,7 +38,6 @@ public class PlayerResource {
     @Produces({ "application/json" })
     @Consumes({ "application/json" })
     public HashMap<String, Object> register(Player player) {
-    	player.setId(playerId.incrementAndGet());
     	players.put(player.getId(), player);
     	LOG.info("player name: " + player.getName());
 
