@@ -67,7 +67,7 @@ URL: /game/{ gameid: 123 }
 
 HTTP METHOD GET
 
-RESPONSE: [ { { player: { playerid: 789 }, player: { playerid: 012 } }, state: { "OPEN" | "RUNNING" | "FINISHED" }, next: { playerid: 123 }, winner: { playerid: 123 } ]
+RESPONSE: [ { { { playerid: 789 }, player: { playerid: 012 } }, state: { "OPEN" | "RUNNING" | "FINISHED" }, next: { playerid: 123 }, winner: { playerid: 123 } } ]
 
 ##list all games##
 
@@ -75,7 +75,7 @@ URL: /game
 
 HTTP METHOD GET
 
-RESPONSE: [ { games: { gameid: 123 }, { gameid: 456 } } ]
+RESPONSE: [ { { gameid: 123 }, { gameid: 456 } } ]
 
 ##list all games with one player##
 
@@ -83,7 +83,7 @@ URL: /game?state="OPEN"
 
 HTTP METHOD GET
 
-RESPONSE: [ { games: { gameid: 123 }, { gameid: 456 } } ]
+RESPONSE: [ { { gameid: 123 }, { gameid: 456 } } ]
 
 #Move#
 
