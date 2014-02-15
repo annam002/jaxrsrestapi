@@ -15,6 +15,7 @@ public class Game {
 
 	private Player player1;
 	private Player player2;
+	private Player currentPlayer;
 	
 	public int getId() {
 		return id;
@@ -22,10 +23,15 @@ public class Game {
 	
 	public void setPlayer1(Player player1) {
 		this.player1 = player1;
+		this.currentPlayer = player1;
 	}
 	
 	public void setPlayer2(Player player2) {
 		this.player2 = player2;
+	}
+	
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 	public boolean addMove(Player player, int field) {
@@ -35,11 +41,22 @@ public class Game {
 		Move move = new Move(field, this, player);
 		if (board.setMove(move, player)) {
 			moves.add(move);
+			updatePlayer(player);
 			return true;
 		}
 		return false;
 	}
 	
+	private void updatePlayer(Player player) {
+		if (player.equals(player1)) {
+			currentPlayer = player2;
+		}
+		else {
+			currentPlayer = player1;
+		}
+		
+	}
+
 	private boolean validPlayer(Player player) {
 		return player.equals(player1) || player.equals(player2);
 	}
