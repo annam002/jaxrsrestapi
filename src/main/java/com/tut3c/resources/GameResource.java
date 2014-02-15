@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -101,22 +102,50 @@ public class GameResource {
     	}
     	return result;
     }
+    
+    @GET
+    @Path("/{gameid:.+}/move/{moveid:.+}")
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    public List<Map<String, Object>> getMove(@PathParam("gameid") Integer gameId, @PathParam("moveid") Integer moveId) {
+    	Game game = games.get(gameId);
+    	List<Map<String, Object>> result = new ArrayList<>();
+    	for (Move move : game.getMoves()) {
+    		if (move.getId() == moveId) {
+    			Map<String, Object> moveMap = new HashMap<>();
+    			moveMap.put(PlayerResource.PLAYERID, move.getPlayer().getId());
+    			moveMap.put(FIELD, getCoordinate(move.getField()));
+    			result.add(moveMap);
+    			break;
+    		}
+    	}
+    	return result;
+    }
 
 	private Integer getField(Map<String, Object> parameter) {
-		return coordinateMap.get(((String) parameter.get(FIELD)).toLowerCase());
+		return coordinateMap.get(((String) parameter.get(FIELD)).toUpperCase());
+	}
+	
+	private String getCoordinate(int field) {
+		for (Entry<String, Integer> entry : coordinateMap.entrySet()) {
+			if (entry.getValue() == field) {
+				return entry.getKey();
+			}
+		}
+		return "";
 	}
     
     private static Map<String, Integer> createCoordinateMap() {
     	Map<String, Integer> map = new HashMap<>();
-    	map.put("a1", 0);
-    	map.put("a2", 1);
-    	map.put("a3", 2);
-    	map.put("b1", 3);
-    	map.put("b2", 4);
-    	map.put("b3", 5);
-    	map.put("c1", 6);
-    	map.put("c2", 7);
-    	map.put("c3", 8);
+    	map.put("A1", 0);
+    	map.put("A2", 1);
+    	map.put("A3", 2);
+    	map.put("B1", 3);
+    	map.put("B2", 4);
+    	map.put("B3", 5);
+    	map.put("C1", 6);
+    	map.put("C2", 7);
+    	map.put("C3", 8);
     	return map;
     }
 

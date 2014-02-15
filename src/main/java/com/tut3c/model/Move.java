@@ -8,12 +8,12 @@ public final class Move {
 	
 	private final int id = ID_GENERATOR.incrementAndGet();
 	
-	private final int coordinate;
+	private final int field;
 	private final Game game;
 	private final Player player;
 	
-	public Move(int coordinate, Game game, Player player) {
-		this.coordinate = coordinate;
+	public Move(int field, Game game, Player player) {
+		this.field = field;
 		this.game = game;
 		this.player = player;
 	}
@@ -22,8 +22,8 @@ public final class Move {
 		return id;
 	}
 	
-	public int getCoordinate() {
-		return coordinate;
+	public int getField() {
+		return field;
 	}
 	
 	public Game getGame() {
