@@ -48,6 +48,7 @@
 		<version.org.codehaus.mojo.gwt.maven.plugin>2.4.0</version.org.codehaus.mojo.gwt.maven.plugin>
 		<version.exec.plugin>1.2.1</version.exec.plugin>		
 		<version.war.plugin>2.4</version.war.plugin>
+			<version.compiler.plugin>2.4</version.compiler.plugin>
 	</properties>
 
   <licenses>
@@ -121,6 +122,8 @@
 <pluginManagement>
             <!-- The WildFly plugin deploys your apps to a local WildFly container -->
             <plugins>
+            
+  
                 <plugin>
                     <groupId>org.wildfly.plugins</groupId>
                     <artifactId>wildfly-maven-plugin</artifactId>
@@ -150,6 +153,17 @@
 
 			<finalName>${project.name}</finalName>
 			<plugins>
+			
+			
+			          	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
@@ -185,6 +199,10 @@
 						<!-- <password>password123</password> -->
 					</configuration>
 				</plugin>
+				
+				
+		
+			
 			</plugins>
 		</build>
 
