@@ -26,6 +26,10 @@ public class GameResource {
 	private static final String GAMEID = "gameid";
 	private static final String FIELD = "field";
 	private static final String MOVEID = "moveid";
+	private static final String PLAYERS = "players";
+	private static final String STATE = "state";
+	private static final String NEXT = "next";
+	private static final String WINNER = "winner";
 
 	public static Map<Integer, Game> games = new HashMap<>();
 	
@@ -43,9 +47,7 @@ public class GameResource {
     	game.setPlayer1(player);
     	games.put(game.getId(), game);
     	
-    	Map<String, Object> result = new HashMap<>();
-    	result.put(GAMEID, game.getId());
-        return result;
+        return buildMap(GAMEID, game.getId());
     }
     
     @GET
@@ -54,9 +56,7 @@ public class GameResource {
     	List<Map<String, Object>> result = new ArrayList<>();
     	for (Game game : games.values()) {
     		if (game.getPlayer2() == null) {
-    			Map<String, Object> gameMap = new HashMap<>();
-    			gameMap.put(GAMEID, game.getId());
-    			result.add(gameMap);
+    			result.add(buildMap(GAMEID, game.getId()));
     		}
     	}
     	
@@ -75,7 +75,25 @@ public class GameResource {
         return Response.noContent().build();
     }
     
-    @POST
+    //players: { { playerid: 789 }, { playerid: 012 } }, 
+    //state: { "OPEN" | "RUNNING" | "FINISHED" }, 
+    //next: { playerid: 123 }, 
+    //winner: { playerid: 123 }
+    @GET
+    @Path("/{gameid:.+}")
+    @Produces({ "application/json" })
+    public List<Map<String, Object>> getGame(@PathParam("gameid") Integer gameId) {
+    	Game game = games.get(gameId);
+    	List<Map<String, Object>> result = new ArrayList<>();
+    	List<Map<String, Object>> playerMap = new ArrayList<>();
+    	playerMap.add(buildMap(PlayerResource.PLAYERID, game.getPlayer1().getId()));
+    	playerMap.add(buildMap(PlayerResource.PLAYERID, game.getPlayer2().getId()));
+    	result.add(buildMap(PLAYERS, playerMap));
+    	
+        return result;
+    }
+
+	@POST
     @Path("/{gameid:.+}/move")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
@@ -90,22 +108,18 @@ public class GameResource {
     
     @GET
     @Path("/{gameid:.+}/move")
-    @Consumes({ "application/json" })
     @Produces({ "application/json" })
     public List<Map<String, Object>> getMoves(@PathParam("gameid") Integer gameId) {
     	Game game = games.get(gameId);
     	List<Map<String, Object>> result = new ArrayList<>();
     	for (Move move : game.getMoves()) {
-    		Map<String, Object> moveMap = new HashMap<>();
-    		moveMap.put(MOVEID, move.getId());
-    		result.add(moveMap);
+    		result.add(buildMap(MOVEID, move.getId()));
     	}
     	return result;
     }
     
     @GET
     @Path("/{gameid:.+}/move/{moveid:.+}")
-    @Consumes({ "application/json" })
     @Produces({ "application/json" })
     public List<Map<String, Object>> getMove(@PathParam("gameid") Integer gameId, @PathParam("moveid") Integer moveId) {
     	Game game = games.get(gameId);
@@ -122,6 +136,12 @@ public class GameResource {
     	return result;
     }
 
+    private Map<String, Object> buildMap(String fieldName, Object value) {
+    	Map<String, Object> result = new HashMap<>();
+    	result.put(fieldName, value);
+		return result;
+	}
+    
 	private Integer getField(Map<String, Object> parameter) {
 		return coordinateMap.get(((String) parameter.get(FIELD)).toUpperCase());
 	}
