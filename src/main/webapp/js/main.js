@@ -23,6 +23,22 @@ require.config({
 
 require([ "knockout", "mapping" ], function(ko, mapping) {
 
+	ko.numericObservable = function(initialValue) {
+	    var _actual = ko.observable(initialValue);
+
+	    var result = ko.dependentObservable({
+	        read: function() {
+	            return _actual();
+	        },
+	        write: function(newValue) {
+	            var parsedValue = parseFloat(newValue);
+	            _actual(isNaN(parsedValue) ? newValue : parsedValue);
+	        }
+	    });
+
+	    return result;
+	};
+
 	function ViewModel() {
 		// Data
 		var self = this;
@@ -64,7 +80,7 @@ require([ "knockout", "mapping" ], function(ko, mapping) {
 		};
 
 		self.createGameRequest = {
-			playerid : ko.observable()
+			playerid : ko.numericObservable()
 		};
 
 		self.createGameResponse = {
@@ -104,8 +120,8 @@ require([ "knockout", "mapping" ], function(ko, mapping) {
 		};
 
 		self.joinGameRequest = {
-			gameid : ko.observable(),
-			playerid : ko.observable()
+			gameid : ko.numericObservable(),
+			playerid : ko.numericObservable()
 		};
 
 		self.joinGameResponse = {
