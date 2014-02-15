@@ -11,11 +11,13 @@ import java.util.Map.Entry;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import com.tut3c.model.Board;
 import com.tut3c.model.Game;
 import com.tut3c.model.Move;
 import com.tut3c.model.Player;
@@ -36,6 +38,9 @@ public class GameResource {
 	private static final String STATE = "state";
 	private static final String NEXT = "next";
 	private static final String WINNER = "winner";
+	private static final String GAME_STATE_OPEN = "OPEN";
+	private static final String GAME_STATE_RUNNING = "RUNNING";
+	private static final String GAME_STATE_FINISHED = "FINISHED";
 
 	public static Map<Integer, Game> games = new HashMap<>();
 	
@@ -67,7 +72,7 @@ public class GameResource {
     	return result;
     }
     
-    @POST
+    @PUT
     @Path("/{gameid:.+}")
     @Consumes({ "application/json" })
     public Response joinGame(@PathParam("gameid") Integer gameId, HashMap<String, Object> parameter) {
@@ -87,14 +92,42 @@ public class GameResource {
     public List<Map<String, Object>> getGame(@PathParam("gameid") Integer gameId) {
     	Game game = games.get(gameId);
     	List<Map<String, Object>> result = new ArrayList<>();
-    	List<Map<String, Object>> playerMap = new ArrayList<>();
-    	playerMap.add(buildMap(PlayerResource.PLAYERID, game.getPlayer1().getId()));
-    	playerMap.add(buildMap(PlayerResource.PLAYERID, game.getPlayer2().getId()));
-    	result.add(buildMap(PLAYERS, playerMap));
-    	
+    	result.add(buildMap(PLAYERS, getGamePlayers(game)));
+    	result.add(buildMap(STATE, getGameState(game)));
+    	result.add(buildMap(NEXT, getNextPlayer(game)));
+    	result.add(buildMap(WINNER, getWinner(game)));
         return result;
     }
 
+	private List<Map<String, Object>> getGamePlayers(Game game) {
+		List<Map<String, Object>> playerMap = new ArrayList<>();
+    	playerMap.add(buildMap(PlayerResource.PLAYERID, getNonNullPlayerId(game.getPlayer1())));
+    	playerMap.add(buildMap(PlayerResource.PLAYERID, getNonNullPlayerId(game.getPlayer2())));
+		return playerMap;
+	}
+
+	private String getGameState(Game game) {
+		if (game.getPlayer2() == null) {
+			return GAME_STATE_OPEN;
+		}
+		if (game.getBoard().getState() == Board.BoardState.RUNNING) {
+			return GAME_STATE_RUNNING;
+		}
+		return GAME_STATE_FINISHED;
+	}
+	
+	private Map<String, Object> getNextPlayer(Game game) {
+		return buildMap(PlayerResource.PLAYERID, getNonNullPlayerId(game.getCurrentPlayer()));
+	}
+
+	private Map<String, Object> getWinner(Game game) {
+		return buildMap(PlayerResource.PLAYERID, getNonNullPlayerId(game.getBoard().getWinningPlayer()));
+	}
+
+	private Integer getNonNullPlayerId(Player player) {
+		return player != null ? player.getId() : null;
+	}
+	
 	@POST
     @Path("/{gameid:.+}/move")
     @Consumes({ "application/json" })
