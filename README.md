@@ -27,6 +27,22 @@ HTTP METHOD POST: { name: "user name" }
 
 RESPONSE: { playerid: 123 }
 
+##get player##
+
+URL: /player/{ playerid: 123}
+
+HTTP METHOD GET:
+
+RESPONSE: { playerid: 123, name: "user name" }
+
+##list all players##
+
+URL: /player
+
+HTTP METHOD GET
+
+RESPONSE: { { playerid: 123 }, { playerid: 456 } }
+
 #GAME#
 
 ##create a new game##
