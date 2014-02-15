@@ -28,11 +28,11 @@ public class Game {
 		this.player2 = player2;
 	}
 
-	public boolean addMove(Player player, int coordinate) {
+	public boolean addMove(Player player, int field) {
 		if (!validPlayer(player)) {
 			return false;
 		}
-		Move move = new Move(coordinate, this, player);
+		Move move = new Move(field, this, player);
 		if (board.setMove(move, player)) {
 			moves.add(move);
 			return true;

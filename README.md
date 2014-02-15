@@ -31,7 +31,7 @@ RESPONSE: { playerid: 123 }
 
 URL: /player/{ playerid: 123}
 
-HTTP METHOD GET:
+HTTP METHOD GET
 
 RESPONSE: { playerid: 123, name: "user name" }
 
@@ -57,7 +57,7 @@ RESPONSE: { gameid: 123 }
 
 URL: /game/{ gameid: 123 }
 
-HTTP METHOD POST: { playerid: 789 }
+HTTP METHOD PUT: { playerid: 789 }
 
 RESPONSE: HTTP 204 NO CONTENT
 
@@ -69,9 +69,17 @@ HTTP METHOD GET
 
 RESPONSE: [ { { player: { playerid: 789 }, player: { playerid: 012 } }, state: { "OPEN" | "RUNNING" | "FINISHED" }, next: { playerid: 123 }, winner: { playerid: 123 } ]
 
-##list all games with one player##
+##list all games##
 
 URL: /game
+
+HTTP METHOD GET
+
+RESPONSE: [ { games: { gameid: 123 }, { gameid: 456 } } ]
+
+##list all games with one player##
+
+URL: /game?state="OPEN"
 
 HTTP METHOD GET
 

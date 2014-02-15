@@ -23,7 +23,7 @@ import com.tut3c.model.Player;
 @Path("/player")
 public class PlayerResource {
 
-	private static final String PLAYERID = "playerid";
+	public static final String PLAYERID = "playerid";
 
 	public static Map<Integer, Player> players = new HashMap<>();
 

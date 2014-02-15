@@ -9,7 +9,7 @@ public class Board {
 	private Player winningPlayer = null;
 
 	public boolean setMove(Move move, Player player) {
-		int coordinate = move.getCoordinate();
+		int coordinate = move.getField();
 		if (fields[coordinate] != null) {
 			return false;
 		}
