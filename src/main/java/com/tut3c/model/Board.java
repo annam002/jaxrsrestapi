@@ -43,6 +43,7 @@ public class Board {
 			|| inOneRow(2, 5, 8)	
 			|| inOneRow(0, 4, 8)	
 			|| inOneRow(2, 4, 6)	
+			|| inOneRow(0, 3, 6)	
 			) {
 			state = BoardState.WIN;
 		}
