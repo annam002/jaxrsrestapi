@@ -15,12 +15,12 @@ import org.apache.log4j.Logger;
 import com.tut3c.model.Player;
 
 /**
-* The Ultimate Tic Tac Toe Challenge 2014
-* 
-* http://jugda.wordpress.com/termine/tic-tac-toe/
-*/
-
+ * The Ultimate Tic Tac Toe Challenge 2014
+ * 
+ * http://jugda.wordpress.com/termine/tic-tac-toe/
+ */
 @Path("/player")
+@Produces({ "application/json" })
 public class PlayerResource {
 
 	public static final String PLAYERID = "playerid";
@@ -32,24 +32,22 @@ public class PlayerResource {
 	public static Player getPlayer(Map<String, Object> parameter) {
 		return players.get(parameter.get(PLAYERID));
 	}
-	
-    @POST
-    @Produces({ "application/json" })
-    @Consumes({ "application/json" })
-    public Map<String, Object> register(Player player) {
-    	players.put(player.getId(), player);
-    	LOG.info("player name: " + player.getName());
 
-    	Map<String, Object> response = new HashMap<>();
-    	response.put(PLAYERID, player.getId());
+	@POST
+	@Consumes({ "application/json" })
+	public Map<String, Object> register(Player player) {
+		players.put(player.getId(), player);
+		LOG.info("player name: " + player.getName());
 
-        return response;
-    }
+		Map<String, Object> response = new HashMap<>();
+		response.put(PLAYERID, player.getId());
 
-    @GET
-    @Produces({ "application/json" })
-    public Collection<Player> get() {
-        return players.values();
-    }
+		return response;
+	}
+
+	@GET
+	public Collection<Player> get() {
+		return players.values();
+	}
 
 }

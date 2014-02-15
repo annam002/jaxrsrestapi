@@ -20,7 +20,13 @@ import com.tut3c.model.Game;
 import com.tut3c.model.Move;
 import com.tut3c.model.Player;
 
+/**
+ * The Ultimate Tic Tac Toe Challenge 2014
+ * 
+ * http://jugda.wordpress.com/termine/tic-tac-toe/
+ */
 @Path("/game")
+@Produces({ "application/json" })
 public class GameResource {
 
 	private static final String GAMEID = "gameid";
@@ -35,7 +41,6 @@ public class GameResource {
 
     @POST
     @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     public Map<String, Object> create(HashMap<String, Object> parameter) {
     	Player player = getPlayer(parameter);
     	
@@ -49,7 +54,6 @@ public class GameResource {
     }
     
     @GET
-    @Produces({ "application/json" })
     public List<Map<String, Object>> getGames() {
     	List<Map<String, Object>> result = new ArrayList<>();
     	for (Game game : games.values()) {
@@ -66,7 +70,6 @@ public class GameResource {
     @POST
     @Path("/{gameid:.+}")
     @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     public Response joinGame(@PathParam("gameid") Integer gameId, HashMap<String, Object> parameter) {
     	Game game = games.get(gameId);
     	Player player = getPlayer(parameter);
@@ -78,7 +81,6 @@ public class GameResource {
     @POST
     @Path("/{gameid:.+}/move")
     @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     public Response move(@PathParam("gameid") Integer gameId, HashMap<String, Object> parameter) {
     	Player player = getPlayer(parameter);
     	Game game = games.get(gameId);
@@ -91,7 +93,6 @@ public class GameResource {
     @GET
     @Path("/{gameid:.+}/move")
     @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     public List<Map<String, Object>> getMoves(@PathParam("gameid") Integer gameId) {
     	Game game = games.get(gameId);
     	List<Map<String, Object>> result = new ArrayList<>();
@@ -106,7 +107,6 @@ public class GameResource {
     @GET
     @Path("/{gameid:.+}/move/{moveid:.+}")
     @Consumes({ "application/json" })
-    @Produces({ "application/json" })
     public List<Map<String, Object>> getMove(@PathParam("gameid") Integer gameId, @PathParam("moveid") Integer moveId) {
     	Game game = games.get(gameId);
     	List<Map<String, Object>> result = new ArrayList<>();
