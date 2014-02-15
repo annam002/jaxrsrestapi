@@ -49,6 +49,9 @@ HTTP METHOD POST: [ { playerid: 123 }, { field: "B1" } ]
 
 RESPONSE: HTTP 204 NO CONTENT
 
+ERROR RESPONSE: HTTP 409 CONFLICT 
+Move not allowed!
+
 ##get moves##
 
 URL: /game/{ gameid: 123 }/move
