@@ -23,7 +23,7 @@ public class CrossOrigin implements Filter{
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*, ");
-		httpServletResponse.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+		httpServletResponse.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT");
 		httpServletResponse.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	    chain.doFilter(request, response);
 	}
