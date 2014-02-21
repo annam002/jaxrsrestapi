@@ -24,6 +24,10 @@ public class TicTacToeTest {
 		game.addMove(player2, 1);
 		game.addMove(player1, 3);
 		game.addMove(player2, 4);
+		game.addMove(player1, 2);
+		game.addMove(player2, 5);
+		game.addMove(player1, 7);
+		game.addMove(player2, 8);
 		game.addMove(player1, 6);
 
 		System.out.println(debugPrint(game.getBoard()));

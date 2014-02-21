@@ -31,10 +31,6 @@ public class Board {
 	}
 	
 	private void updateGameState() {
-		if (allFieldsSet()) {
-			state = BoardState.DRAW;
-			return;
-		}
 		if (inOneRow(0, 1, 2)
 			|| inOneRow(3, 4, 5)	
 			|| inOneRow(6, 7, 8)	
@@ -47,11 +43,14 @@ public class Board {
 			) {
 			state = BoardState.WIN;
 		}
+		else if (allFieldsSet()) {
+			state = BoardState.DRAW;
+		}
 	}
 	
 	private boolean allFieldsSet() {
 		for (int i = 0; i < 9; i++) {
-			if (fields[i] != null) {
+			if (fields[i] == null) {
 				return false;
 			}
 		}
