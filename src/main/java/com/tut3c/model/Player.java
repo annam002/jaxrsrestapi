@@ -4,30 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+@XmlRootElement
 public final class Player {
 
 	private static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 	
-	private final int id = ID_GENERATOR.incrementAndGet();
+	private final int playerid = ID_GENERATOR.incrementAndGet();
 	private final List<Game> games = new ArrayList<>();
 	
 	private String name;
 
 	public Player() {
+		System.out.println("New Player here!");
 	}
 
 	public Player(String name) {
 		this.name = name;
 	}
 	
-	public int getId() {
-		return id;
+	public int getPlayerid() {
+		return playerid;
 	}
 
 	public void addGame(Game game) {
 		games.add(game);
 	}
 
+	@XmlTransient
 	public String getName() {
 		return name;
 	}
@@ -36,6 +42,7 @@ public final class Player {
 		this.name = name;
 	}
 
+	@XmlTransient
 	public List<Game> getGames() {
 		return games;
 	}
@@ -44,7 +51,7 @@ public final class Player {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + playerid;
 		return result;
 	}
 
@@ -57,7 +64,7 @@ public final class Player {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
-		if (id != other.id)
+		if (playerid != other.playerid)
 			return false;
 		return true;
 	}

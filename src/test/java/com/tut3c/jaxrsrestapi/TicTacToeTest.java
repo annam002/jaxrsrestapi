@@ -20,15 +20,15 @@ public class TicTacToeTest {
 		game.setPlayer1(player1);
 		game.setPlayer2(player2);
 
-		game.addMove(player1, 0);
-		game.addMove(player2, 1);
-		game.addMove(player1, 3);
-		game.addMove(player2, 4);
-		game.addMove(player1, 2);
-		game.addMove(player2, 5);
-		game.addMove(player1, 7);
-		game.addMove(player2, 8);
-		game.addMove(player1, 6);
+		game.addMove(player1, "a1");
+		game.addMove(player2, "a2");
+		game.addMove(player1, "b1");
+		game.addMove(player2, "b2");
+		game.addMove(player1, "a3");
+		game.addMove(player2, "b3");
+		game.addMove(player1, "c2");
+		game.addMove(player2, "c3");
+		game.addMove(player1, "c1");
 
 		System.out.println(debugPrint(game.getBoard()));
 

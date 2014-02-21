@@ -27,46 +27,47 @@ import com.tut3c.model.Player;
 @Produces({ "application/json" })
 public class PlayerResource {
 
-	public static final String PLAYERID = "playerid";
+	public static final String PLAYER_ID = "playerid";
+	private static final String PLAYER_NAME = "name";
 
 	public static Map<Integer, Player> players = new HashMap<>();
 
 	private static Logger LOG = Logger.getLogger(PlayerResource.class);
 
 	public static Player getPlayer(Map<String, Object> parameter) {
-		return players.get(parameter.get(PLAYERID));
+		return players.get(parameter.get(PLAYER_ID));
 	}
 
 	@POST
 	@Consumes({ "application/json" })
-	public Map<String, Object> register(Player player) {
-		players.put(player.getId(), player);
+	public Player register(Map<String, Object> parameters) {
+		String name = (String) parameters.get(PLAYER_NAME);
+		if (name == null) {
+			throw new WebApplicationException(Status.CONFLICT);
+		}
+		
+		Player player = new Player(name);
+		players.put(player.getPlayerid(), player);
 		LOG.info("player name: " + player.getName());
-
-		Map<String, Object> response = new HashMap<>();
-		response.put(PLAYERID, player.getId());
-
-		return response;
+		return player;
 	}
 
 	@GET
 	@Path("/{id}")
-	public Player getById(@PathParam("id") Integer id) {
+	public Map<String, Object> getById(@PathParam("id") Integer id) {
 		if (!players.containsKey(id)) {
 			throw new WebApplicationException(Status.NOT_FOUND);
 		}
-		return players.get(id);
+		Player player = players.get(id);
+		Map<String, Object> result = new HashMap<>();
+		result.put(PLAYER_ID, player.getPlayerid());
+		result.put(PLAYER_NAME, player.getName());
+		return result;
 	}
 
 	@GET
-	public List<Map<String, Object>> getAll() {
-		List<Map<String, Object>> response = new ArrayList<>();
-		for(Player p : players.values()) {
-			Map<String, Object> player = new HashMap<>();
-			player.put("playerid", p.getId());
-			response.add(player);
-		}
-		return response;
+	public List<Player> getAll() {
+		return new ArrayList<>(players.values());
 	}
 
 }

@@ -9,11 +9,11 @@ public class Board {
 	private Player winningPlayer = null;
 
 	public boolean setMove(Move move, Player player) {
-		int coordinate = move.getField();
-		if (fields[coordinate] != null) {
+		Coordinate coordinate = move.getCoordinate();
+		if (fields[coordinate.getCoordinate()] != null) {
 			return false;
 		}
-		fields[coordinate] = player;
+		fields[coordinate.getCoordinate()] = player;
 		updateGameState();
 		return true;
 	}
