@@ -16,9 +16,8 @@ public class TicTacToeTest {
 		Player player1 = new Player("player1");
 		Player player2 = new Player("player2");
 
-		Game game = new Game();
-		game.setPlayer1(player1);
-		game.setPlayer2(player2);
+		Game game = Game.create(player1, true);
+		game.addPlayer(player2);
 
 		game.addMove(player1, "a1");
 		game.addMove(player2, "a2");

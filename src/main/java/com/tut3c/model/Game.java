@@ -62,8 +62,7 @@ public class Game {
     	else {
     		this.player1 = player;
     	}
-		this.currentPlayer = player;
-		
+		this.currentPlayer = player1;
 	}
 	
 	public Move addMove(Player player, String coordinate) {
